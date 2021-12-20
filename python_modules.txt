@@ -1,0 +1,6 @@
+numpy
+matplotlib
+wikipedia-api
+discord.py
+google-api-python-client
+imdbpy
