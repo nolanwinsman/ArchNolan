@@ -51,19 +51,14 @@ for PKG in "${PKGS_SNAP[@]}"; do
 done
 
 echo 'installing Python modules'
-pip install -r puthon_modules.txt
-# # installs python packages
-# echo 'Installing Python Modules'
-# for PKG in "${PKGS_PYTHON[@]}"; do
-#     echo "INSTALLING: ${PKG}"
-#     pip install "$PKG"
-# done
+pip install -r python_modules.txt
 
 # installs VsCode extensions
 echo 'Installing Python Modules'
-for PKG in "${PKGS_VSCODE[@]}" do
+for PKG in "${PKGS_VSCODE[@]}"; do
     echo "INSTALLING: ${PKG}"
     code --install-extension ${PKG}
+done
 
 # Installs the newest GloriousEggroll Proton file and places it in the Steam compatability directory
 echo 'Installing GloriousEggroll Proton to Steam directory'
@@ -75,11 +70,11 @@ curl -IkLs -o NUL -w %{url_effective} https://github.com/GloriousEggroll/proton-
 tar xf temp.tar.gz
 sudo rm temp.tar.gz
 sudo rm NUL
-echo "$HOME"
-sudo mkdir "$HOME/.steam/root/compatibilitytools.d"
+
+sudo mkdir "~/.steam/root/compatibilitytools.d"
 for f in */ ; do 
-    mv "$f" "$HOME/.steam/root/compatibilitytools.d/";
-    # sudo rm -r "$f";
+    mv "$f" "~/.steam/root/compatibilitytools.d";
+    sudo rm -r "$f";
 done
 
 # TODO
