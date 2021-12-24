@@ -71,10 +71,10 @@ tar xf temp.tar.gz
 sudo rm temp.tar.gz
 sudo rm NUL
 
-sudo mkdir "~/.steam/root/compatibilitytools.d"
+sudo mkdir "/home/nolan/.steam/root/compatibilitytools.d"
 for f in */ ; do 
-    mv "$f" "~/.steam/root/compatibilitytools.d";
-    sudo rm -r "$f";
+    mv "$f" "/home/nolan/.steam/root/compatibilitytools.d";
+    sudo rm -r "$f"; # used for if the folder is already in compatabilitytools.d
 done
 
 # TODO
