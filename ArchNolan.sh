@@ -77,6 +77,8 @@ for f in */ ; do
     sudo rm -r "$f"; # used for if the folder is already in compatabilitytools.d
 done
 
-# TODO
-# install Bulk Rename Utility
-#
+# Downloads Bulk Rename Utility and installs it
+echo "Installing Bulk Rename Utility"
+wget https://www.bulkrenameutility.co.uk/Downloads/BRU_setup.exe
+wine BRU_setup.exe # installs Bulk Rename Utility using WINE
+sudo rm BRU_setup.exe
