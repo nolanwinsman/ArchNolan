@@ -13,6 +13,7 @@ PKGS_PACMAN=(
 'firefox'
 'vlc'
 'flatpak'
+'tk'
 )
 
 PKGS_SNAP=(
