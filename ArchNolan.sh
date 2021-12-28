@@ -14,6 +14,8 @@ PKGS_PACMAN=(
 'vlc'
 'flatpak'
 'tk'
+'netcat'
+'nmap'
 )
 
 PKGS_SNAP=(
