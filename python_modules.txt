@@ -7,6 +7,7 @@ imdbpy
 aniso8601
 click
 Flask
+flask-cors
 Flask-RESTful
 Flask-SQLAlchemy
 itsdangerous

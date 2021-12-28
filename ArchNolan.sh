@@ -16,6 +16,7 @@ PKGS_PACMAN=(
 'tk'
 'netcat'
 'nmap'
+'flameshot'
 )
 
 PKGS_SNAP=(
