@@ -41,6 +41,7 @@ PKGS_PYTHON=(
 PKGS_VSCODE=(
 'vscodevim.vim'
 'ritwickdey.liveserver'
+'dsznajder.es7-react-js-snippets'
 )
 
 # installs pacman packages
