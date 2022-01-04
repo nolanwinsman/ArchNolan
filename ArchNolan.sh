@@ -18,6 +18,8 @@ PKGS_PACMAN=(
 'nmap'
 'flameshot'
 'ruby'
+'npx'
+'nodejs'
 )
 
 PKGS_SNAP=(
