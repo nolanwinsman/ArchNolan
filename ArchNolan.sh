@@ -27,6 +27,7 @@ PKGS_SNAP=(
 'qbittorrent-arnatious'
 'retroarch'
 'gitkraken --classic' # TODO not working
+'obs-studio'
 )
 
 PKGS_PYTHON=(
