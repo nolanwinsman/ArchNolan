@@ -97,6 +97,36 @@ for f in */ ; do
     sudo rm -r "$f"; # used for if the folder is already in compatabilitytools.d
 done
 
+# Graphics Drivers find and install
+gpu_type=$(lspci)
+if grep -E "NVIDIA|GeForce" <<< ${gpu_type}; then
+    pacman -S nvidia --noconfirm --needed
+	nvidia-xconfig
+elif lspci | grep 'VGA' | grep -E "Radeon|AMD"; then
+    pacman -S xf86-video-amdgpu --noconfirm --needed
+elif grep -E "Integrated Graphics Controller" <<< ${gpu_type}; then
+    pacman -S libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel libva-intel-driver libva-utils lib32-mesa --needed --noconfirm
+elif grep -E "Intel Corporation UHD" <<< ${gpu_type}; then
+    pacman -S libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel libva-intel-driver libva-utils lib32-mesa --needed --noconfirm
+fi
+
+export PATH=$PATH:~/.local/bin
+cp -r $HOME/$SCRIPTHOME/dotfiles/* $HOME/.config/
+pip install konsave
+konsave -i $HOME/$SCRIPTHOME/kde.knsv
+sleep 1
+konsave -a kde
+
+# should install kitty theme
+sudo cat <<EOF > /etc/vconsole.conf
+KEYMAP=us
+FONT=ter-v16b
+EOF
+
+cp -r $HOME/.config/kitty $HOME/$SCRIPTHOME/dotfiles/kitty
+konsave -s kde
+konsave -e kde
+
 # Downloads Bulk Rename Utility and installs it
 echo "Installing Bulk Rename Utility"
 wget https://www.bulkrenameutility.co.uk/Downloads/BRU_setup.exe
