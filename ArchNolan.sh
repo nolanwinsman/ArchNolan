@@ -20,6 +20,17 @@ PKGS_PACMAN=(
 'ruby'
 'npx'
 'nodejs'
+'code'
+'gimp'
+'wine-gecko'
+'wine-mono'
+'winetricks'
+'vim'
+'steam'
+'wget'
+'kitty'
+'gcc'
+'git'
 )
 
 PKGS_SNAP=(
