@@ -6,8 +6,6 @@
 # TODO make script install snap if not present
 # TODO downgrade yay Package
 
-SCRIPTHOME = 'ArchNolan'
-
 PKGS_PACMAN=(
 'discord'
 'telegram-desktop'
@@ -33,6 +31,7 @@ PKGS_PACMAN=(
 'kitty'
 'gcc'
 'git'
+'mcomix'
 )
 
 PKGS_SNAP=(
@@ -150,41 +149,50 @@ echo -ne "
 KITTY="kitty/*"
 for f in $KITTY
 do
-    cp $f "/home/nolan/.config/kitty/" # TODO make this work for other users
+    cp $f "$HOME/home/$USER/.config/kitty/" # TODO make this work for other users
 done
 # TODO just copy kitty.conf and theme.conf to the kitty config file
 
-# # Downloads Bulk Rename Utility and installs it
-# echo -ne "
-# -------------------------------------------------------------------------
+# Downloads Bulk Rename Utility and installs it
+echo -ne "
+-------------------------------------------------------------------------
 
-#                             Bulk Rename Utility
+                            Bulk Rename Utility
 
-# -------------------------------------------------------------------------
-# "
-# wget https://www.bulkrenameutility.co.uk/Downloads/BRU_setup.exe
-# wine BRU_setup.exe # installs Bulk Rename Utility using WINE
-# sudo rm BRU_setup.exe
+-------------------------------------------------------------------------
+"
+wget https://www.bulkrenameutility.co.uk/Downloads/BRU_setup.exe
+wine BRU_setup.exe # installs Bulk Rename Utility using WINE
+sudo rm BRU_setup.exe
 
 # # Installs the newest GloriousEggroll Proton file and places it in the Steam compatability directory
-# echo -ne "
-# -------------------------------------------------------------------------
+echo -ne "
+-------------------------------------------------------------------------
 
-#                             Proton-GE
+                            Proton-GE
 
-# -------------------------------------------------------------------------
-# "
-# curl -IkLs -o NUL -w %{url_effective} https://github.com/GloriousEggroll/proton-ge-custom/releases/latest \
-#      | grep -o "[^/]*$"\
-#      | xargs -I T \
-#        curl -kL https://github.com/GloriousEggroll/proton-ge-custom/releases/download/T/Proton-T.tar.gz \
-#        -o temp.tar.gz
-# tar xf temp.tar.gz
-# sudo rm temp.tar.gz
-# sudo rm NUL
+-------------------------------------------------------------------------
+"
+curl -IkLs -o NUL -w %{url_effective} https://github.com/GloriousEggroll/proton-ge-custom/releases/latest \
+     | grep -o "[^/]*$"\
+     | xargs -I T \
+       curl -kL https://github.com/GloriousEggroll/proton-ge-custom/releases/download/T/Proton-T.tar.gz \
+       -o temp.tar.gz
+tar xf temp.tar.gz
+sudo rm temp.tar.gz
+sudo rm NUL
 
-# sudo mkdir "/home/nolan/.steam/root/compatibilitytools.d"
+sudo mkdir "/home/nolan/.steam/root/compatibilitytools.d"
+
+for file in $(grep -l Proton *); do
+    echo "File is $file"
+    # mv $file "/home/nolan/.steam/root/compatibilitytools.d";
+    # rm -i $file
+done
 # for f in */ ; do 
-#     mv "$f" "/home/nolan/.steam/root/compatibilitytools.d";
-#     sudo rm -r "$f"; # used for if the folder is already in compatabilitytools.d
+#     if grep -q "Proton" "$f"; then
+#         echo "File contains Proton $f"
+#         mv "$f" "/home/nolan/.steam/root/compatibilitytools.d";
+#         sudo rm "$f"; # used for if the folder is already in compatabilitytools.d
+#     fi
 # done
