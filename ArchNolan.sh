@@ -134,22 +134,7 @@ echo -ne "
 -------------------------------------------------------------------------
 "
 
-export PATH=$PATH:~/.local/bin
-cp -r $HOME/Documents/Github/ArchNolan/dotfiles/* $HOME/.config/
-pip install konsave
-konsave -i $HOME/$SCRIPTHOME/kde.knsv
-sleep 1
-konsave -a kde
-
-# should install kitty theme
-sudo cat <<EOF > /etc/vconsole.conf
-KEYMAP=us
-FONT=ter-v16b
-EOF
-
-cp -r $HOME/.config/kitty $HOME/$SCRIPTHOME/dotfiles/kitty
-konsave -s kde
-konsave -e kde
+# TODO just copy kitty.conf and theme.conf to the kitty config file
 
 # # Downloads Bulk Rename Utility and installs it
 # echo -ne "
