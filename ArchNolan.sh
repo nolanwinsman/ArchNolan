@@ -36,7 +36,7 @@ PKGS_PACMAN=(
 )
 
 PKGS_SNAP=(
-'slack'
+'slack --classic' # TODO not working
 'qbittorrent-arnatious'
 'retroarch'
 'gitkraken --classic' # TODO not working
@@ -83,6 +83,8 @@ echo -ne "
 -------------------------------------------------------------------------
 
 "
+sudo ln -s /var/lib/snapd/snap /snap # makes a symbolic link
+
 for PKG in "${PKGS_SNAP[@]}"; do
     echo "INSTALLING: ${PKG}"
     sudo snap install "$PKG"
@@ -145,8 +147,11 @@ echo -ne "
 -------------------------------------------------------------------------
 
 "
-
-
+KITTY="kitty/*"
+for f in $KITTY
+do
+    cp $f "/home/nolan/.config/kitty/" # TODO make this work for other users
+done
 # TODO just copy kitty.conf and theme.conf to the kitty config file
 
 # # Downloads Bulk Rename Utility and installs it
