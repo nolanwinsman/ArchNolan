@@ -60,11 +60,13 @@ PKGS_VSCODE=(
 
 # installs pacman packages
 echo -ne "
+
 -------------------------------------------------------------------------
 
                             Pacman Pakages
 
 -------------------------------------------------------------------------
+
 "
 for PKG in "${PKGS_PACMAN[@]}"; do
     echo "INSTALLING: ${PKG}"
@@ -73,11 +75,13 @@ done
 
 # installs snap packages
 echo -ne "
+
 -------------------------------------------------------------------------
 
                             Snap Pakages
 
 -------------------------------------------------------------------------
+
 "
 for PKG in "${PKGS_SNAP[@]}"; do
     echo "INSTALLING: ${PKG}"
@@ -85,21 +89,25 @@ for PKG in "${PKGS_SNAP[@]}"; do
 done
 
 echo -ne "
+
 -------------------------------------------------------------------------
 
                             Python Modules
 
 -------------------------------------------------------------------------
+
 "
 pip install -r python_modules.txt
 
 # installs VsCode extensions
 echo -ne "
+
 -------------------------------------------------------------------------
 
                             VS Code Extensions
 
 -------------------------------------------------------------------------
+
 "
 for PKG in "${PKGS_VSCODE[@]}"; do
     echo "INSTALLING: ${PKG}"
@@ -108,11 +116,13 @@ done
 
 # Graphics Drivers find and install
 echo -ne "
+
 -------------------------------------------------------------------------
 
                             Graphics Drivers
 
 -------------------------------------------------------------------------
+
 "
 gpu_type=$(lspci)
 if grep -E "NVIDIA|GeForce" <<< ${gpu_type}; then
@@ -127,12 +137,15 @@ elif grep -E "Intel Corporation UHD" <<< ${gpu_type}; then
 fi
 
 echo -ne "
+
 -------------------------------------------------------------------------
 
                             Kitty Terminal Setup
 
 -------------------------------------------------------------------------
+
 "
+
 
 # TODO just copy kitty.conf and theme.conf to the kitty config file
 
