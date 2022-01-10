@@ -160,10 +160,10 @@ echo -ne "
                             Bulk Rename Utility
 
 -------------------------------------------------------------------------
-"
-wget https://www.bulkrenameutility.co.uk/Downloads/BRU_setup.exe
-wine BRU_setup.exe # installs Bulk Rename Utility using WINE
-sudo rm BRU_setup.exe
+# "
+# wget https://www.bulkrenameutility.co.uk/Downloads/BRU_setup.exe
+# wine BRU_setup.exe # installs Bulk Rename Utility using WINE
+# sudo rm BRU_setup.exe
 
 # # Installs the newest GloriousEggroll Proton file and places it in the Steam compatability directory
 echo -ne "
@@ -184,15 +184,8 @@ sudo rm NUL
 
 sudo mkdir "/home/nolan/.steam/root/compatibilitytools.d"
 
-for file in $(grep -l Proton *); do
-    echo "File is $file"
-    # mv $file "/home/nolan/.steam/root/compatibilitytools.d";
-    # rm -i $file
+for file in *"Proton"* ; do 
+    mv "$file" "/home/nolan/.steam/root/compatibilitytools.d";
+    echo "Deleting file $file"
+    sudo rm -r "$file"; # used for if the folder is already in compatabilitytools.d
 done
-# for f in */ ; do 
-#     if grep -q "Proton" "$f"; then
-#         echo "File contains Proton $f"
-#         mv "$f" "/home/nolan/.steam/root/compatibilitytools.d";
-#         sudo rm "$f"; # used for if the folder is already in compatabilitytools.d
-#     fi
-# done
