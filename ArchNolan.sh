@@ -159,34 +159,35 @@ echo -ne "
 
 -------------------------------------------------------------------------
 
-"
-KITTY="kitty/*"
-for file in $KITTY
-do
-    echo "Copying $file to $HOMEDIR.config/kitty/"
-    cp $file "$HOMEDIR.config/kitty/" # TODO make this work for other users
-done
-# TODO just copy kitty.conf and theme.conf to the kitty config file
+" # applies kitty config file and adds opaque theme to Kitty
+KITTY="$HOMEDIR.config/kitty"
 
-# Downloads Bulk Rename Utility and installs it
+cp "kitty/kitty.conf" "$KITTY"
+sudo mkdir "$KITTY/themes/" # makes themes directory if it does not already exist
+cp "kitty/opaque.conf" "$KITTY/themes"
+
 echo -ne "
+
 -------------------------------------------------------------------------
 
                             Bulk Rename Utility
 
 -------------------------------------------------------------------------
-# "
+
+# " # Downloads Bulk Rename Utility and installs it
 # wget https://www.bulkrenameutility.co.uk/Downloads/BRU_setup.exe
 # wine BRU_setup.exe # installs Bulk Rename Utility using WINE
 # sudo rm BRU_setup.exe
 
 # # Installs the newest GloriousEggroll Proton file and places it in the Steam compatability directory
 echo -ne "
+
 -------------------------------------------------------------------------
 
                             Proton-GE
 
 -------------------------------------------------------------------------
+
 "
 curl -IkLs -o NUL -w %{url_effective} https://github.com/GloriousEggroll/proton-ge-custom/releases/latest \
      | grep -o "[^/]*$"\
