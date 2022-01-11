@@ -4,17 +4,19 @@
 # Script is to be used after running the ArchTitus script on a fresh Arch Linux Install 
 
 # TODO make script install snap if not present
-# TODO downgrade yay Package
 
+# gets the username from the user for /home/username
 echo "Please input your username:"
 read MAINUSER
 echo "$MAINUSER"
 
+# checks if the directory exists
 if [ -d "/home/$MAINUSER/" ]
 then
     HOMEDIR="/home/$MAINUSER/"
     echo "$HOMEDIR exists, continuing with program"
 else
+    # directory does not exist so the code is exited
     echo "/home/$MAINUSER/ does not exist, exiting code"
     exit 404
 fi
@@ -71,7 +73,6 @@ PKGS_VSCODE=(
 'dsznajder.es7-react-js-snippets'
 )
 
-# installs pacman packages
 echo -ne "
 
 -------------------------------------------------------------------------
@@ -80,13 +81,12 @@ echo -ne "
 
 -------------------------------------------------------------------------
 
-"
+" # installs pacman packages
 for PKG in "${PKGS_PACMAN[@]}"; do
     echo "INSTALLING: ${PKG}"
     sudo pacman -S "$PKG" --noconfirm --needed
 done
 
-# installs snap packages
 echo -ne "
 
 -------------------------------------------------------------------------
@@ -95,7 +95,7 @@ echo -ne "
 
 -------------------------------------------------------------------------
 
-"
+" # installs snap packages
 sudo ln -s /var/lib/snapd/snap /snap # makes a symbolic link
 
 for PKG in "${PKGS_SNAP[@]}"; do
@@ -111,7 +111,7 @@ echo -ne "
 
 -------------------------------------------------------------------------
 
-"
+" # installs python pip modules
 pip install -r python_modules.txt
 
 # installs VsCode extensions
@@ -123,7 +123,7 @@ echo -ne "
 
 -------------------------------------------------------------------------
 
-"
+" # installs vs code extensions
 for PKG in "${PKGS_VSCODE[@]}"; do
     echo "INSTALLING: ${PKG}"
     code --install-extension ${PKG}
@@ -138,7 +138,7 @@ echo -ne "
 
 -------------------------------------------------------------------------
 
-"
+" # code taken from ArchTitus, used for installing graphics drivers
 gpu_type=$(lspci)
 if grep -E "NVIDIA|GeForce" <<< ${gpu_type}; then
     pacman -S nvidia --noconfirm --needed
@@ -174,7 +174,7 @@ echo -ne "
 
 -------------------------------------------------------------------------
 
-# " # Downloads Bulk Rename Utility and installs it
+# " # Downloads Bulk Rename Utility and installs it using wine
 # wget https://www.bulkrenameutility.co.uk/Downloads/BRU_setup.exe
 # wine BRU_setup.exe # installs Bulk Rename Utility using WINE
 # sudo rm BRU_setup.exe
@@ -188,7 +188,7 @@ echo -ne "
 
 -------------------------------------------------------------------------
 
-"
+" # installs the newest version of Proton-GE and installs it to the compatabilitytools.d directory in steam
 curl -IkLs -o NUL -w %{url_effective} https://github.com/GloriousEggroll/proton-ge-custom/releases/latest \
      | grep -o "[^/]*$"\
      | xargs -I T \
