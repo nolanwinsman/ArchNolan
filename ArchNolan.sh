@@ -6,6 +6,19 @@
 # TODO make script install snap if not present
 # TODO downgrade yay Package
 
+echo "Please input your username:"
+read MAINUSER
+echo "$MAINUSER"
+
+if [ -d "/home/$MAINUSER/" ]
+then
+    HOMEDIR="/home/$MAINUSER/"
+    echo "$HOMEDIR exists, continuing with program"
+else
+    echo "/home/$MAINUSER/ does not exist, exiting code"
+    exit 404
+fi
+
 PKGS_PACMAN=(
 'discord'
 'telegram-desktop'
@@ -32,6 +45,7 @@ PKGS_PACMAN=(
 'gcc'
 'git'
 'mcomix'
+'lm_sensors'
 )
 
 PKGS_SNAP=(
@@ -147,9 +161,10 @@ echo -ne "
 
 "
 KITTY="kitty/*"
-for f in $KITTY
+for file in $KITTY
 do
-    cp $f "$HOME/home/$USER/.config/kitty/" # TODO make this work for other users
+    echo "Copying $file to $HOMEDIR.config/kitty/"
+    cp $file "$HOMEDIR.config/kitty/" # TODO make this work for other users
 done
 # TODO just copy kitty.conf and theme.conf to the kitty config file
 
@@ -184,8 +199,10 @@ sudo rm NUL
 
 sudo mkdir "/home/nolan/.steam/root/compatibilitytools.d"
 
-for file in *"Proton"* ; do 
-    mv "$file" "/home/nolan/.steam/root/compatibilitytools.d";
+for file in *"Proton"* ; do
+    echo "Moving $file to $HOMEDIR.steam/root/compatabilitytools.d"
+    echo "If file is already there, deletes the file here"
+    mv "$file" "$HOMEDIR.steam/root/compatibilitytools.d";
     echo "Deleting file $file"
     sudo rm -r "$file"; # used for if the folder is already in compatabilitytools.d
 done
