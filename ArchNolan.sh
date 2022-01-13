@@ -48,7 +48,7 @@ PKGS_PACMAN=(
 'git'
 'mcomix'
 'lm_sensors'
-'virt-manager'
+'virt-manager qemu vde2 ebtables dnsmasq bridge-utils openbsd-netcat' # virtual machine dependencies
 )
 
 PKGS_SNAP=(
