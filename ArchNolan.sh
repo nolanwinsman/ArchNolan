@@ -48,6 +48,7 @@ PKGS_PACMAN=(
 'git'
 'mcomix'
 'lm_sensors'
+'virt-manager'
 )
 
 PKGS_SNAP=(
