@@ -79,11 +79,11 @@ PKGS_VSCODE=(
 
 echo -ne "
 
--------------------------------------------------------------------------
+----------------------------------------------------------------------
 
                             Pacman Pakages
 
--------------------------------------------------------------------------
+----------------------------------------------------------------------
 
 " # installs pacman packages
 for PKG in "${PKGS_PACMAN[@]}"; do
@@ -93,11 +93,11 @@ done
 
 echo -ne "
 
--------------------------------------------------------------------------
+----------------------------------------------------------------------
 
                             Snap Pakages
 
--------------------------------------------------------------------------
+----------------------------------------------------------------------
 
 " # installs snap packages
 sudo ln -s /var/lib/snapd/snap /snap # makes a symbolic link
@@ -109,11 +109,11 @@ done
 
 echo -ne "
 
--------------------------------------------------------------------------
+----------------------------------------------------------------------
 
                             Python Modules
 
--------------------------------------------------------------------------
+----------------------------------------------------------------------
 
 " # installs python pip modules
 pip install -r python_modules.txt
@@ -121,11 +121,11 @@ pip install -r python_modules.txt
 # installs VsCode extensions
 echo -ne "
 
--------------------------------------------------------------------------
+----------------------------------------------------------------------
 
                             VS Code Extensions
 
--------------------------------------------------------------------------
+----------------------------------------------------------------------
 
 " # installs vs code extensions
 for PKG in "${PKGS_VSCODE[@]}"; do
@@ -136,11 +136,11 @@ done
 # Graphics Drivers find and install
 echo -ne "
 
--------------------------------------------------------------------------
+----------------------------------------------------------------------
 
                             Graphics Drivers
 
--------------------------------------------------------------------------
+----------------------------------------------------------------------
 
 " # code taken from ArchTitus, used for installing graphics drivers
 gpu_type=$(lspci)
@@ -157,11 +157,11 @@ fi
 
 echo -ne "
 
--------------------------------------------------------------------------
+----------------------------------------------------------------------
 
                             Kitty Terminal Setup
 
--------------------------------------------------------------------------
+----------------------------------------------------------------------
 
 " # applies kitty config file and adds opaque theme to Kitty
 KITTY="$HOMEDIR/.config/kitty"
@@ -172,11 +172,11 @@ cp "kitty/opaque.conf" "$KITTY/themes"
 
 echo -ne "
 
--------------------------------------------------------------------------
+----------------------------------------------------------------------
 
                             Bulk Rename Utility
 
--------------------------------------------------------------------------
+----------------------------------------------------------------------
 
 # " # Downloads Bulk Rename Utility and installs it using wine
 # wget https://www.bulkrenameutility.co.uk/Downloads/BRU_setup.exe
@@ -186,11 +186,11 @@ echo -ne "
 # # Installs the newest GloriousEggroll Proton file and places it in the Steam compatability directory
 echo -ne "
 
--------------------------------------------------------------------------
+----------------------------------------------------------------------
 
                             Proton-GE
 
--------------------------------------------------------------------------
+----------------------------------------------------------------------
 
 " # installs the newest version of Proton-GE and installs it to the compatabilitytools.d directory in steam
 # commented out for testing
@@ -215,11 +215,11 @@ echo -ne "
 
 echo -ne "
 
--------------------------------------------------------------------------
+----------------------------------------------------------------------
 
                             Mac Virtual Machine
 
--------------------------------------------------------------------------
+----------------------------------------------------------------------
 
 "
 git clone 'https://github.com/foxlet/macOS-Simple-KVM.git' 
@@ -241,6 +241,7 @@ for file in *"macOS"* ; do
     rm -r "$file" # for if the file is not moved
 done
 
+#TODO setup alias for MAC to open the vm
 
 printf "Visit https://github.com/foxlet/macOS-Simple-KVM to view the rest of the steps to setup a Mac Virtual Machine\n"
 printf "Mac VM almost setup, all you need to do is create an empty hard disc with a set storage amount. In this example it is 64G\n\n"
