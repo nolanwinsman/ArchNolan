@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Shell script to install a lot of packages I use for Arch Linux
 # Inspired by ArchTitus https://github.com/ChrisTitusTech/ArchTitus
 # Script is to be used after running the ArchTitus script on a fresh Arch Linux Install 
@@ -13,13 +13,15 @@ echo "$MAINUSER"
 # checks if the directory exists
 if [ -d "/home/$MAINUSER/" ]
 then
-    HOMEDIR="/home/$MAINUSER/"
+    HOMEDIR="/home/$MAINUSER"
     echo "$HOMEDIR exists, continuing with program"
 else
     # directory does not exist so the code is exited
     echo "/home/$MAINUSER/ does not exist, exiting code"
     exit 404
 fi
+
+CWD=$(pwd)
 
 PKGS_PACMAN=(
 'discord'
@@ -48,7 +50,8 @@ PKGS_PACMAN=(
 'git'
 'mcomix'
 'lm_sensors'
-'virt-manager qemu vde2 ebtables dnsmasq bridge-utils openbsd-netcat' # virtual machine dependencies
+'bless'
+'qemu python python-pip python-wheel' # Mac VM dependencies
 )
 
 PKGS_SNAP=(
@@ -161,7 +164,7 @@ echo -ne "
 -------------------------------------------------------------------------
 
 " # applies kitty config file and adds opaque theme to Kitty
-KITTY="$HOMEDIR.config/kitty"
+KITTY="$HOMEDIR/.config/kitty"
 
 cp "kitty/kitty.conf" "$KITTY"
 sudo mkdir "$KITTY/themes/" # makes themes directory if it does not already exist
@@ -190,21 +193,57 @@ echo -ne "
 -------------------------------------------------------------------------
 
 " # installs the newest version of Proton-GE and installs it to the compatabilitytools.d directory in steam
-curl -IkLs -o NUL -w %{url_effective} https://github.com/GloriousEggroll/proton-ge-custom/releases/latest \
-     | grep -o "[^/]*$"\
-     | xargs -I T \
-       curl -kL https://github.com/GloriousEggroll/proton-ge-custom/releases/download/T/Proton-T.tar.gz \
-       -o temp.tar.gz
-tar xf temp.tar.gz
-sudo rm temp.tar.gz
-sudo rm NUL
+# commented out for testing
+# curl -IkLs -o NUL -w %{url_effective} https://github.com/GloriousEggroll/proton-ge-custom/releases/latest \
+#      | grep -o "[^/]*$"\
+#      | xargs -I T \
+#        curl -kL https://github.com/GloriousEggroll/proton-ge-custom/releases/download/T/Proton-T.tar.gz \
+#        -o temp.tar.gz
+# tar xf temp.tar.gz
+# sudo rm temp.tar.gz
+# sudo rm NUL
 
-sudo mkdir "/home/nolan/.steam/root/compatibilitytools.d"
+# sudo mkdir "/home/nolan/.steam/root/compatibilitytools.d"
 
-for file in *"Proton"* ; do
-    echo "Moving $file to $HOMEDIR.steam/root/compatabilitytools.d"
-    echo "If file is already there, deletes the file here"
-    mv "$file" "$HOMEDIR.steam/root/compatibilitytools.d";
-    echo "Deleting file $file"
-    sudo rm -r "$file"; # used for if the folder is already in compatabilitytools.d
+# for file in *"Proton"* ; do
+#     echo "Moving $file to $HOMEDIR.steam/root/compatabilitytools.d"
+#     echo "If file is already there, deletes the file here"
+#     mv "$file" "$HOMEDIR.steam/root/compatibilitytools.d";
+#     echo "Deleting file $file"
+#     sudo rm -r "$file"; # used for if the folder is already in compatabilitytools.d
+# done
+
+echo -ne "
+
+-------------------------------------------------------------------------
+
+                            Mac Virtual Machine
+
+-------------------------------------------------------------------------
+
+"
+git clone 'https://github.com/foxlet/macOS-Simple-KVM.git' 
+
+mkdir "$HOMEDIR/vm"
+
+for file in *"macOS"* ; do
+    cd $file # the way jumpstart.sh runs requires you to be inside the directory
+    echo "Running jumpstart.sh"
+    "./jumpstart.sh"
+    echo "Adding text to basic.sh"
+    basic_line_1='-drive id=SystemDisk,if=none,file=MyDisk.qcow2 \'
+    basic_line_2='-device ide-hd,bus=sata.4,drive=SystemDisk \'
+    printf "\t$basic_line_1" >> "basic.sh"
+    printf "\n\t$basic_line_2" >> "basic.sh"
+    cd $CWD
+    echo "Moving $file to $HOMEDIR/vm/"
+    mv $file "$HOMEDIR/vm"
+    rm -r "$file" # for if the file is not moved
 done
+
+
+printf "Visit https://github.com/foxlet/macOS-Simple-KVM to view the rest of the steps to setup a Mac Virtual Machine\n"
+printf "Mac VM almost setup, all you need to do is create an empty hard disc with a set storage amount. In this example it is 64G\n\n"
+echo "qemu-img create -f qcow2 MyDisk.qcow2 64G"
+
+
