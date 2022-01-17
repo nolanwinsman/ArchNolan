@@ -233,12 +233,15 @@ for file in *"macOS"* ; do
     echo "Adding text to basic.sh"
     basic_line_1='-drive id=SystemDisk,if=none,file=MyDisk.qcow2 \'
     basic_line_2='-device ide-hd,bus=sata.4,drive=SystemDisk \'
-    printf "\t$basic_line_1" >> "basic.sh"
-    printf "\n\t$basic_line_2" >> "basic.sh"
+    printf "    $basic_line_1" >> "basic.sh"
+    printf "\n    $basic_line_2" >> "basic.sh"
     cd $CWD
     echo "Moving $file to $HOMEDIR/vm/"
     mv $file "$HOMEDIR/vm"
     rm -r "$file" # for if the file is not moved
+    echo "Changing owners of files"
+    sudo chown "$MAINUSER" "$HOMEDIR/vm" # changes the owner of the directory to the user running the script
+    sudo chown "$MAINUSER" "$HOMEDIR/vm/$file"
 done
 
 #TODO setup alias for MAC to open the vm
@@ -246,5 +249,3 @@ done
 printf "Visit https://github.com/foxlet/macOS-Simple-KVM to view the rest of the steps to setup a Mac Virtual Machine\n"
 printf "Mac VM almost setup, all you need to do is create an empty hard disc with a set storage amount. In this example it is 64G\n\n"
 echo "qemu-img create -f qcow2 MyDisk.qcow2 64G"
-
-
