@@ -222,30 +222,38 @@ echo -ne "
 ----------------------------------------------------------------------
 
 "
-git clone 'https://github.com/foxlet/macOS-Simple-KVM.git' 
+# checks if the directory exists
+if [ -d "$HOMEDIR/vm/macOS-Simple-KVM" ] # TODO make this check if folder with *mac* exists
+then
+    echo "Mac VM already setup, to run this delete the macOS-Simple-KVM directory"
+else
+    git clone 'https://github.com/foxlet/macOS-Simple-KVM.git' 
+    mkdir "$HOMEDIR/vm"
+    for file in *"macOS"* ; do
+        cd $file # the way jumpstart.sh runs requires you to be inside the directory
+        echo "Running jumpstart.sh"
+        "./jumpstart.sh"
+        printf "\n\n\n" # prints three new lines to make the output more readable
+        echo "Adding text to basic.sh"
+        basic_line_1='-drive id=SystemDisk,if=none,file=MyDisk.qcow2 \'
+        basic_line_2='-device ide-hd,bus=sata.4,drive=SystemDisk \'
+        printf "    $basic_line_1" >> "basic.sh"
+        printf "\n    $basic_line_2" >> "basic.sh"
+        sudo qemu-img create -f qcow2 MyDisk.qcow2 32G # creates the partition for the Mac VM. Set to 32 Gigabytes
+        cd $CWD
+        echo "Moving $file to $HOMEDIR/vm/"
+        mv $file "$HOMEDIR/vm"
+        rm -r "$file" # for if the file is not moved
+        echo "Changing owners of files"
+        sudo chown "$MAINUSER" "$HOMEDIR/vm" # changes the owner of the directory to the user running the script
+        sudo chown "$MAINUSER" "$HOMEDIR/vm/$file"
+        printf "\n\nMac VM Setup with a disk size of 32 Gigabytes. Delete MyDisk.qcow2 inside $file to delete the partition."
+        printf "To create a new Disk partition for the Mac VM, run the command\n\n"
+        printf "sudo qemu-img create -f qcow2 MyDisk.qcow2 32G \n\n"
+    done
+fi
 
-mkdir "$HOMEDIR/vm"
 
-for file in *"macOS"* ; do
-    cd $file # the way jumpstart.sh runs requires you to be inside the directory
-    echo "Running jumpstart.sh"
-    "./jumpstart.sh"
-    echo "Adding text to basic.sh"
-    basic_line_1='-drive id=SystemDisk,if=none,file=MyDisk.qcow2 \'
-    basic_line_2='-device ide-hd,bus=sata.4,drive=SystemDisk \'
-    printf "    $basic_line_1" >> "basic.sh"
-    printf "\n    $basic_line_2" >> "basic.sh"
-    cd $CWD
-    echo "Moving $file to $HOMEDIR/vm/"
-    mv $file "$HOMEDIR/vm"
-    rm -r "$file" # for if the file is not moved
-    echo "Changing owners of files"
-    sudo chown "$MAINUSER" "$HOMEDIR/vm" # changes the owner of the directory to the user running the script
-    sudo chown "$MAINUSER" "$HOMEDIR/vm/$file"
-done
 
 #TODO setup alias for MAC to open the vm
 
-printf "Visit https://github.com/foxlet/macOS-Simple-KVM to view the rest of the steps to setup a Mac Virtual Machine\n"
-printf "Mac VM almost setup, all you need to do is create an empty hard disc with a set storage amount. In this example it is 64G\n\n"
-echo "qemu-img create -f qcow2 MyDisk.qcow2 64G"
