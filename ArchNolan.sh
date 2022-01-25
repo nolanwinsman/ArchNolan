@@ -52,6 +52,7 @@ PKGS_PACMAN=(
 'lm_sensors'
 'bless'
 'qemu python python-pip python-wheel' # Mac VM dependencies
+'lutris'
 )
 
 PKGS_SNAP=(
@@ -178,12 +179,11 @@ echo -ne "
 
 ----------------------------------------------------------------------
 
-# " # Downloads Bulk Rename Utility and installs it using wine
+" # Downloads Bulk Rename Utility and installs it using wine
 # wget https://www.bulkrenameutility.co.uk/Downloads/BRU_setup.exe
 # wine BRU_setup.exe # installs Bulk Rename Utility using WINE
 # sudo rm BRU_setup.exe
 
-# # Installs the newest GloriousEggroll Proton file and places it in the Steam compatability directory
 echo -ne "
 
 ----------------------------------------------------------------------
@@ -225,7 +225,7 @@ echo -ne "
 # checks if the directory exists
 if [ -d "$HOMEDIR/vm/macOS-Simple-KVM" ] # TODO make this check if folder with *mac* exists
 then
-    echo "Mac VM already setup, to run this delete the macOS-Simple-KVM directory"
+    echo "Mac VM already setup, to reinstall delete the macOS-Simple-KVM directory"
 else
     git clone 'https://github.com/foxlet/macOS-Simple-KVM.git' 
     mkdir "$HOMEDIR/vm"
@@ -239,7 +239,7 @@ else
         basic_line_2='-device ide-hd,bus=sata.4,drive=SystemDisk \'
         printf "    $basic_line_1" >> "basic.sh"
         printf "\n    $basic_line_2" >> "basic.sh"
-        sudo qemu-img create -f qcow2 MyDisk.qcow2 32G # creates the partition for the Mac VM. Set to 32 Gigabytes
+        sudo qemu-img create -f qcow2 MyDisk.qcow2 75G # creates the partition for the Mac VM. Set to 32 Gigabytes
         cd $CWD
         echo "Moving $file to $HOMEDIR/vm/"
         mv $file "$HOMEDIR/vm"
@@ -256,4 +256,4 @@ fi
 
 
 #TODO setup alias for MAC to open the vm
-
+#TODO alias mac='cd /home/nolan/vm/macOS-Simple-KVM; sudo ./basic.sh; cd $HOME'
