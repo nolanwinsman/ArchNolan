@@ -23,6 +23,10 @@ fi
 
 CWD=$(pwd)
 
+# TODO
+# yay packages
+# picom-git
+
 PKGS_PACMAN=(
 'discord'
 'telegram-desktop'
@@ -53,6 +57,7 @@ PKGS_PACMAN=(
 'bless'
 'qemu python python-pip python-wheel' # Mac VM dependencies
 'lutris'
+'locate'
 )
 
 PKGS_SNAP=(
@@ -239,7 +244,7 @@ else
         basic_line_2='-device ide-hd,bus=sata.4,drive=SystemDisk \'
         printf "    $basic_line_1" >> "basic.sh"
         printf "\n    $basic_line_2" >> "basic.sh"
-        sudo qemu-img create -f qcow2 MyDisk.qcow2 75G # creates the partition for the Mac VM. Set to 32 Gigabytes
+        sudo qemu-img create -f qcow2 MyDisk.qcow2 30G # creates the partition for the Mac VM. Set to 32 Gigabytes
         cd $CWD
         echo "Moving $file to $HOMEDIR/vm/"
         mv $file "$HOMEDIR/vm"
