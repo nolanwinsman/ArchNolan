@@ -92,10 +92,15 @@ echo -ne "
 ----------------------------------------------------------------------
 
 " # installs pacman packages
-for PKG in "${PKGS_PACMAN[@]}"; do
-    echo "INSTALLING: ${PKG}"
-    sudo pacman -S "$PKG" --noconfirm --needed
-done
+read -p "Do you want to install Pacman Packages? " -n 1 -r
+echo    # (optional) move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    for PKG in "${PKGS_PACMAN[@]}"; do
+        echo "INSTALLING: ${PKG}"
+        sudo pacman -S "$PKG" --noconfirm --needed
+    done
+fi
 
 echo -ne "
 
