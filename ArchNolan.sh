@@ -10,6 +10,17 @@ echo "Please input your username:"
 read MAINUSER
 echo "$MAINUSER"
 
+echo "$1"
+if [[ "$1" == "-y" ]]; then
+        echo "Auto accepting every setup"
+        AUTO=true
+else
+        echo "Not automatically accepting every setup. Use -y as the first argument to automatically say yes to everything\n"
+        AUTO=false
+fi
+
+echo "$AUTO"
+
 # checks if the directory exists
 if [ -d "/home/$MAINUSER/" ]
 then
@@ -61,10 +72,10 @@ PKGS_PACMAN=(
 )
 
 PKGS_SNAP=(
-'slack --classic' # TODO not working
+"slack --classic" # TODO not working
 'qbittorrent-arnatious'
 'retroarch'
-'gitkraken --classic' # TODO not working
+"gitkraken --classic" # TODO not working
 'obs-studio'
 )
 
@@ -92,15 +103,33 @@ echo -ne "
 ----------------------------------------------------------------------
 
 " # installs pacman packages
-read -p "Do you want to install Pacman Packages? " -n 1 -r
-echo    # (optional) move to a new line
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
+
+# function to install all pacman packages
+pacman_packages() {
     for PKG in "${PKGS_PACMAN[@]}"; do
         echo "INSTALLING: ${PKG}"
         sudo pacman -S "$PKG" --noconfirm --needed
     done
+}
+
+
+if [ $AUTO == true ]
+then
+    echo "AUTO == true"
+    pacman_packages
+else
+    echo "AUTO == false"
+    read -p "Do you want to install Pacman Packages? " -n 1 -r
+    echo    # (optional) move to a new line
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        pacman_packages
+    fi
 fi
+
+
+exit 404
+
 
 echo -ne "
 
