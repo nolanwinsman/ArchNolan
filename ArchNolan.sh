@@ -4,6 +4,7 @@
 # Script is to be used after running the ArchTitus script on a fresh Arch Linux Install 
 
 # TODO make script install snap if not present
+# TODO npm install -g expo-cli
 
 # gets the username from the user for /home/username
 echo "Please input your username:"
@@ -75,6 +76,7 @@ PKGS_SNAP=(
 'retroarch'
 "gitkraken --classic" # TODO not working
 'obs-studio'
+"node --classic"
 )
 
 PKGS_PYTHON=(
