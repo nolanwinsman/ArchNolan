@@ -396,7 +396,7 @@ echo -ne "
 
 "
 node_setup() {
-    sudo n 16.9. # I currently need node version 16.9
+    sudo n 16.9.0 # I currently need node version 16.9
     sudo npm install --global yarn
     yarn global add expo-cli
     npm install
