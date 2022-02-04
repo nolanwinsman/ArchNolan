@@ -68,6 +68,7 @@ PKGS_PACMAN=(
 'qemu python python-pip python-wheel' # Mac VM dependencies
 'lutris'
 'locate'
+'nodejs npm'
 )
 
 PKGS_SNAP=(
@@ -76,7 +77,6 @@ PKGS_SNAP=(
 'retroarch'
 "gitkraken --classic" # TODO not working
 'obs-studio'
-"node --classic"
 )
 
 PKGS_PYTHON=(
@@ -88,6 +88,7 @@ PKGS_PYTHON=(
 'imdbpy'
 )
 
+# TODO these are not working
 PKGS_VSCODE=(
 'vscodevim.vim'
 'ritwickdey.liveserver'
@@ -385,6 +386,33 @@ else
     fi
 fi
 
+echo -ne "
+
+----------------------------------------------------------------------
+
+                        Node & Expo install
+
+----------------------------------------------------------------------
+
+"
+node_setup() {
+    sudo n 16.9. # I currently need node version 16.9
+    sudo npm install --global yarn
+    yarn global add expo-cli
+    npm install
+}
+
+if [ $AUTO == true ]
+then
+    node_setup
+else
+    read -p "Do you want to install and setup Node & Expo? " -n 1 -r
+    echo    # (optional) move to a new line
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        node_setup
+    fi
+fi
 
 #TODO setup alias for MAC to open the vm
 #TODO alias mac='cd /home/nolan/vm/macOS-Simple-KVM; sudo ./basic.sh; cd $HOME'
