@@ -36,6 +36,9 @@ CWD=$(pwd) # sets the current working directory to a variable
 # TODO
 # yay packages
 # picom-git
+# yay -S balena-etcher
+
+# TODO rvm the ruby package manager
 
 PKGS_PACMAN=(
 'discord'
@@ -69,6 +72,9 @@ PKGS_PACMAN=(
 'lutris'
 'locate'
 'nodejs npm'
+'scrcpy'
+'sqlitebrowser'
+'gcc'
 )
 
 PKGS_SNAP=(
@@ -331,60 +337,60 @@ else
         proton_setup
     fi
 fi
-echo -ne "
+# echo -ne "
 
-----------------------------------------------------------------------
+# ----------------------------------------------------------------------
 
-                            Mac Virtual Machine
+#                             Mac Virtual Machine
 
-----------------------------------------------------------------------
+# ----------------------------------------------------------------------
 
-" # downloads and installs a Mac Virtual Machine. Some manual configuration is still required
+# " # downloads and installs a Mac Virtual Machine. Some manual configuration is still required
 
-mac_vm() {
-# checks if the directory exists
-if [ -d "$HOMEDIR/vm/macOS-Simple-KVM" ] # TODO make this check if folder with *mac* exists
-    then
-        echo "Mac VM already setup, to reinstall delete the macOS-Simple-KVM directory"
-    else
-        git clone 'https://github.com/foxlet/macOS-Simple-KVM.git' 
-        mkdir "$HOMEDIR/vm"
-        for file in *"macOS"* ; do
-            cd $file # the way jumpstart.sh runs requires you to be inside the directory
-            echo "Running jumpstart.sh"
-            "./jumpstart.sh"
-            printf "\n\n\n" # prints three new lines to make the output more readable
-            echo "Adding text to basic.sh"
-            basic_line_1='-drive id=SystemDisk,if=none,file=MyDisk.qcow2 \'
-            basic_line_2='-device ide-hd,bus=sata.4,drive=SystemDisk \'
-            printf "    $basic_line_1" >> "basic.sh"
-            printf "\n    $basic_line_2" >> "basic.sh"
-            sudo qemu-img create -f qcow2 MyDisk.qcow2 30G # creates the partition for the Mac VM. Set to 32 Gigabytes
-            cd $CWD
-            echo "Moving $file to $HOMEDIR/vm/"
-            mv $file "$HOMEDIR/vm"
-            rm -r "$file" # for if the file is not moved
-            echo "Changing owners of files"
-            sudo chown "$MAINUSER" "$HOMEDIR/vm" # changes the owner of the directory to the user running the script
-            sudo chown "$MAINUSER" "$HOMEDIR/vm/$file"
-            printf "\n\nMac VM Setup with a disk size of 32 Gigabytes. Delete MyDisk.qcow2 inside $file to delete the partition."
-            printf "To create a new Disk partition for the Mac VM, run the command\n\n"
-            printf "sudo qemu-img create -f qcow2 MyDisk.qcow2 32G \n\n"
-        done
-    fi
-}
+# mac_vm() {
+# # checks if the directory exists
+# if [ -d "$HOMEDIR/vm/macOS-Simple-KVM" ] # TODO make this check if folder with *mac* exists
+#     then
+#         echo "Mac VM already setup, to reinstall delete the macOS-Simple-KVM directory"
+#     else
+#         git clone 'https://github.com/foxlet/macOS-Simple-KVM.git' 
+#         mkdir "$HOMEDIR/vm"
+#         for file in *"macOS"* ; do
+#             cd $file # the way jumpstart.sh runs requires you to be inside the directory
+#             echo "Running jumpstart.sh"
+#             "./jumpstart.sh"
+#             printf "\n\n\n" # prints three new lines to make the output more readable
+#             echo "Adding text to basic.sh"
+#             basic_line_1='-drive id=SystemDisk,if=none,file=MyDisk.qcow2 \'
+#             basic_line_2='-device ide-hd,bus=sata.4,drive=SystemDisk \'
+#             printf "    $basic_line_1" >> "basic.sh"
+#             printf "\n    $basic_line_2" >> "basic.sh"
+#             sudo qemu-img create -f qcow2 MyDisk.qcow2 30G # creates the partition for the Mac VM. Set to 32 Gigabytes
+#             cd $CWD
+#             echo "Moving $file to $HOMEDIR/vm/"
+#             mv $file "$HOMEDIR/vm"
+#             rm -r "$file" # for if the file is not moved
+#             echo "Changing owners of files"
+#             sudo chown "$MAINUSER" "$HOMEDIR/vm" # changes the owner of the directory to the user running the script
+#             sudo chown "$MAINUSER" "$HOMEDIR/vm/$file"
+#             printf "\n\nMac VM Setup with a disk size of 32 Gigabytes. Delete MyDisk.qcow2 inside $file to delete the partition."
+#             printf "To create a new Disk partition for the Mac VM, run the command\n\n"
+#             printf "sudo qemu-img create -f qcow2 MyDisk.qcow2 32G \n\n"
+#         done
+#     fi
+# }
 
-if [ $AUTO == true ]
-then
-    mac_vm
-else
-    read -p "Do you want to Download and a Mac Virtual Machine using qemu " -n 1 -r
-    echo    # (optional) move to a new line
-    if [[ $REPLY =~ ^[Yy]$ ]]
-    then
-        mac_vm
-    fi
-fi
+# if [ $AUTO == true ]
+# then
+#     mac_vm
+# else
+#     read -p "Do you want to Download and a Mac Virtual Machine using qemu " -n 1 -r
+#     echo    # (optional) move to a new line
+#     if [[ $REPLY =~ ^[Yy]$ ]]
+#     then
+#         mac_vm
+#     fi
+# fi
 
 echo -ne "
 
@@ -399,6 +405,7 @@ node_setup() {
     sudo n 16.9.0 # I currently need node version 16.9
     sudo npm install --global yarn
     yarn global add expo-cli
+    npm install cypress # validate this works
     npm install
 }
 
@@ -413,6 +420,35 @@ else
         node_setup
     fi
 fi
+
+echo -ne "
+
+----------------------------------------------------------------------
+
+                        Android Studio
+
+----------------------------------------------------------------------
+
+"
+android_studio_setup() {
+    git clone https://aur.archlinux.org/android-studio.git
+    cd "android-studio"
+    makepkg -si
+    ANDROID_SDK_ROOT="$HOMEDIR/Android/Sdk/"
+    export ANDROID_SDK_ROOT
+}
+if [ $AUTO == true ]
+then
+    node_setup
+else
+    read -p "Do you want to install and setup Node & Expo? " -n 1 -r
+    echo    # (optional) move to a new line
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        android_studio_setup()
+    fi
+fi
+
 
 #TODO setup alias for MAC to open the vm
 #TODO alias mac='cd /home/nolan/vm/macOS-Simple-KVM; sudo ./basic.sh; cd $HOME'
