@@ -38,6 +38,11 @@ CWD=$(pwd) # sets the current working directory to a variable
 # picom-git
 # yay -S balena-etcher
 
+# paru
+# libreoffice-extension-languagetool
+# hsqldb2-java
+# ttf-gentium-basic
+
 # TODO rvm the ruby package manager
 
 PKGS_PACMAN=(
@@ -75,6 +80,11 @@ PKGS_PACMAN=(
 'scrcpy'
 'sqlitebrowser'
 'gcc'
+'base-devel --needed'
+'--needed jre-openjdk'
+'libreoffice-still'
+'hunspell'
+'hunspell-en_us'
 )
 
 PKGS_SNAP=(
@@ -116,6 +126,8 @@ pacman_packages() {
         echo "INSTALLING: ${PKG}"
         sudo pacman -S "$PKG" --noconfirm --needed
     done
+    sudo pacman -S --needed ttf-caladea ttf-carlito ttf-dejavu ttf-liberation ttf-linux-libertine-g noto-fonts adobe-source-code-pro-fonts adobe-source-sans-pro-fonts adobe-source-serif-pro-fonts
+
 }
 if [ $AUTO == true ]
 then
@@ -445,10 +457,39 @@ else
     echo    # (optional) move to a new line
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
-        android_studio_setup()
+        android_studio_setup
     fi
 fi
 
 
+
+echo -ne "
+
+----------------------------------------------------------------------
+
+                        Peru Setup
+
+----------------------------------------------------------------------
+
+"
+peru_setup() {
+    git clone https://aur.archlinux.org/paru.git
+    cd paru
+    makepkg -si
+    cd "$HOMEDIR"
+    sudo rm -r paru
+}
+
+if [ $AUTO == true ]
+then
+    peru_setup
+else
+    read -p "Do you want to install and setup Peru? " -n 1 -r
+    echo    # (optional) move to a new line
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        peru_setup
+    fi
+fi
 #TODO setup alias for MAC to open the vm
 #TODO alias mac='cd /home/nolan/vm/macOS-Simple-KVM; sudo ./basic.sh; cd $HOME'
