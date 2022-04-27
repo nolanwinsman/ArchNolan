@@ -85,6 +85,7 @@ PKGS_PACMAN=(
 'libreoffice-still'
 'hunspell'
 'hunspell-en_us'
+'python2'
 )
 
 PKGS_SNAP=(
@@ -93,6 +94,7 @@ PKGS_SNAP=(
 'retroarch'
 "gitkraken --classic" # TODO not working
 'obs-studio'
+'spotify'
 )
 
 PKGS_PYTHON=(
