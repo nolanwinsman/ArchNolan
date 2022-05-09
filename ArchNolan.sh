@@ -86,6 +86,7 @@ PKGS_PACMAN=(
 'hunspell'
 'hunspell-en_us'
 'python2'
+'dolphin-emu'
 )
 
 PKGS_SNAP=(
