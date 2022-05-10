@@ -87,6 +87,7 @@ PKGS_PACMAN=(
 'hunspell-en_us'
 'python2'
 'dolphin-emu'
+'tree'
 )
 
 PKGS_SNAP=(
@@ -454,9 +455,9 @@ android_studio_setup() {
 }
 if [ $AUTO == true ]
 then
-    node_setup
+    android_studio_setup
 else
-    read -p "Do you want to install and setup Node & Expo? " -n 1 -r
+    read -p "Do you want to install and setup Android Studio " -n 1 -r
     echo    # (optional) move to a new line
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
