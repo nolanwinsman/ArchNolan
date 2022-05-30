@@ -37,6 +37,8 @@ CWD=$(pwd) # sets the current working directory to a variable
 # yay packages
 # picom-git
 # yay -S balena-etcher
+# yay -S brave
+# yay -S goverlay (Github One)
 
 # paru
 # libreoffice-extension-languagetool
