@@ -119,11 +119,11 @@ echo -ne "
 
 "
 
-# function to install deluge
+# function to run startup.sh on boot
 setup_startup() {
-    sudo cp "$CWD/starup.sh" "/usr/local/sbin/" # copies startup.sh to directory
+    sudo cp "/$CWD/starup.sh" "/usr/local/sbin/" # copies startup.sh to directory
     sudo chmod +x "/usr/local/sbin/startup.sh"
-    sudo cp "$CWD/startup.service" "/etc/systemmd/system/"
+    sudo cp "/$CWD/startup.service" "/etc/systemmd/system/"
     sudo systemctl enable startup.service
 
 }
@@ -131,7 +131,7 @@ if [ $AUTO == true ]
 then
     setup_startup
 else
-    read -p "Do you want to Create a Startup Script that runs surfshark-vpn and Deluge on boot? " -n 1 -r
+    read -p "Do you want to Create a Startup Script that runs startup.sh on boot? " -n 1 -r
     echo    # (optional) move to a new line
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
