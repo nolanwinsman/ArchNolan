@@ -46,3 +46,30 @@ else
         setup_ssh
     fi
 fi
+
+echo -ne "
+
+----------------------------------------------------------------------
+
+                            Installing Surfshark
+
+----------------------------------------------------------------------
+
+"
+
+# function to enable surfshark vpn on this machine
+setup_surfshark() {
+    pamac build surfshark-vpn # surfshark vpn
+
+}
+if [ $AUTO == true ]
+then
+    setup_surfshark
+else
+    read -p "Do you want to Install Surfshark VPN? " -n 1 -r
+    echo    # (optional) move to a new line
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        setup_surfshark
+    fi
+fi
