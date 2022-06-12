@@ -59,7 +59,7 @@ echo -ne "
 
 # function to enable surfshark vpn on this machine
 setup_surfshark() {
-    pamac build surfshark-vpn # surfshark vpn
+    pamac build surfshark-vpn --noconfirm --needed # surfshark vpn
 
 }
 if [ $AUTO == true ]
@@ -90,7 +90,7 @@ setup_deluge() {
     echo "Installing Deluge"
     echo "Making Directories for Deluge"
     # creates directories
-    sudo mkdir "/home/$MAINUSER/Torrents"
+    sudo mkdir "/home/$MAINUSER/Torrents/"
     sudo mkdir "/home/$MAINUSER/Torrents/downloading/"
     sudo mkdir "/home/$MAINUSER/Torrents/backups/"
     sudo mkdir "/home/$MAINUSER/Torrents/watch/"
