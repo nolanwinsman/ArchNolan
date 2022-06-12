@@ -2,7 +2,7 @@
 Description= Startup Script to start Surfshark VPN and Deluge on Boot
 
 [Service]
-ExecStart=/usr/local/sbin/startup.Surfshark
+ExecStart=/usr/local/sbin/startup.sh
 
 [Install]
 WantedBy=multi-user.target
