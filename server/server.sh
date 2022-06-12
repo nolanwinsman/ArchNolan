@@ -16,6 +16,50 @@ fi
 
 CWD=$(pwd) # sets the current working directory to a variable
 
+PKGS_PACMAN=(
+'ruby'
+'npx'
+'nodejs'
+'vim'
+'wget'
+'gcc'
+'git'
+'nodejs npm'
+'python2'
+'tree'
+)
+
+echo -ne "
+
+----------------------------------------------------------------------
+
+                            Pacman Pakages
+
+----------------------------------------------------------------------
+
+" # installs pacman packages
+
+# function to install all pacman packages
+pacman_packages() {
+    for PKG in "${PKGS_PACMAN[@]}"; do
+        echo "INSTALLING: ${PKG}"
+        sudo pacman -S "$PKG" --noconfirm --needed
+    done
+
+}
+if [ $AUTO == true ]
+then
+    pacman_packages
+else
+    read -p "Do you want to install Pacman Packages? " -n 1 -r
+    echo    # (optional) move to a new line
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        pacman_packages
+    fi
+fi
+echo -ne "
+
 
 echo -ne "
 

@@ -69,7 +69,6 @@ PKGS_PACMAN=(
 'steam'
 'wget'
 'kitty'
-'gcc'
 'git'
 'mcomix'
 'lm_sensors'
@@ -80,7 +79,7 @@ PKGS_PACMAN=(
 'nodejs npm'
 'scrcpy'
 'sqlitebrowser'
-'gcc'
+'gcc' # C compiler
 'base-devel --needed'
 '--needed jre-openjdk'
 'libreoffice-still'
