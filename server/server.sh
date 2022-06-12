@@ -121,9 +121,9 @@ echo -ne "
 
 # function to run startup.sh on boot
 setup_startup() {
-    sudo cp "starup.sh" "/usr/local/sbin/" # copies startup.sh to directory
+    sudo cp "$CWD/startup.sh" "/usr/local/sbin/" # copies startup.sh to directory
     sudo chmod +x "/usr/local/sbin/startup.sh"
-    sudo cp "startup.service" "/etc/systemmd/system/"
+    sudo cp "$CWD/startup.service" "/etc/systemmd/system/"
     sudo systemctl enable startup.service
 
 }
