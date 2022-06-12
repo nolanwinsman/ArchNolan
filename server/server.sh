@@ -123,7 +123,7 @@ echo -ne "
 setup_startup() {
     sudo cp "$CWD/startup.sh" "/usr/local/sbin/" # copies startup.sh to directory
     sudo chmod +x "/usr/local/sbin/startup.sh"
-    sudo cp "$CWD/startup.service" "/etc/systemmd/system/"
+    sudo cp "$CWD/startup.service" "/etc/systemd/system/"
     sudo systemctl enable startup.service
 
 }
