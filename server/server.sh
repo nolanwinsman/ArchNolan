@@ -163,9 +163,12 @@ echo -ne "
 
 # function to run startup.sh on boot
 setup_startup() {
+    echo "Copying startup.sh to /usr/local/sbin/"
     sudo cp "$CWD/startup.sh" "/usr/local/sbin/" # copies startup.sh to directory
     sudo chmod +x "/usr/local/sbin/startup.sh"
+    echo "Copying startup.service to /etc/systemd/system/"
     sudo cp "$CWD/startup.service" "/etc/systemd/system/"
+    echo "Enabling startup.service"
     sudo systemctl enable startup.service
 
 }
@@ -178,5 +181,33 @@ else
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
         setup_startup
+    fi
+fi
+
+echo -ne "
+
+----------------------------------------------------------------------
+
+                            Plex Server
+
+----------------------------------------------------------------------
+
+"
+
+# function to setup Plex Media Server
+plex_setup() {
+    pacman -S plex-media-server --noconfirm --needed
+    systemctl enable plexmediaserver.service
+
+}
+if [ $AUTO == true ]
+then
+    plex_setup
+else
+    read -p "Do you want to Install and Setup Plex Media Server? " -n 1 -r
+    echo    # (optional) move to a new line
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        plex_setup
     fi
 fi
