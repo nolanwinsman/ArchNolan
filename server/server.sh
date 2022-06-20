@@ -120,36 +120,11 @@ echo -ne "
 
 ----------------------------------------------------------------------
 
-                            Installing Deluge
+                            Installing Qbittorent
 
 ----------------------------------------------------------------------
 
 "
-
-# function to install deluge
-setup_deluge() {
-    sudo pacman -S deluge --noconfirm --needed
-    echo "Installing Deluge"
-    echo "Making Directories for Deluge"
-    # creates directories
-    sudo mkdir "/home/$MAINUSER/Torrents/"
-    sudo mkdir "/home/$MAINUSER/Torrents/downloading/"
-    sudo mkdir "/home/$MAINUSER/Torrents/backups/"
-    sudo mkdir "/home/$MAINUSER/Torrents/watch/"
-    sudo chown -R $MAINUSER:$MAINUSER "/home/$MAINUSER/Torrents/" # sets permissions to Torrents folder
-
-}
-if [ $AUTO == true ]
-then
-    setup_deluge
-else
-    read -p "Do you want to Install Deluge? " -n 1 -r
-    echo    # (optional) move to a new line
-    if [[ $REPLY =~ ^[Yy]$ ]]
-    then
-        setup_deluge
-    fi
-fi
 
 echo -ne "
 

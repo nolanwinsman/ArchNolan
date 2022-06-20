@@ -131,7 +131,7 @@ pacman_packages() {
         echo "INSTALLING: ${PKG}"
         sudo pacman -S "$PKG" --noconfirm --needed
     done
-    pamac build surfshark-vpn # surfshark vpn
+    pamac install yay && yay -S surfshark-vpn # surfshark vpn
     sudo pacman -S --needed ttf-caladea ttf-carlito ttf-dejavu ttf-liberation ttf-linux-libertine-g noto-fonts adobe-source-code-pro-fonts adobe-source-sans-pro-fonts adobe-source-serif-pro-fonts
 
 }
