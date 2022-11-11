@@ -65,7 +65,7 @@ PKGS_PACMAN=(
 'wine-gecko'
 'wine-mono'
 'winetricks'
-'vim'
+'neovim'
 'steam'
 'wget'
 'kitty'
@@ -89,7 +89,13 @@ PKGS_PACMAN=(
 'dolphin-emu'
 'tree'
 'brave-browser'
+'etcher'
 )
+
+PKGS_YAY={
+    'github-desktop'
+
+}
 
 PKGS_SNAP=(
 "slack --classic" # TODO not working
@@ -144,6 +150,37 @@ else
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
         pacman_packages
+    fi
+fi
+
+echo -ne "
+
+----------------------------------------------------------------------
+
+                            Yay Pakages
+
+----------------------------------------------------------------------
+
+" # installs pacman packages
+
+# function to install all pacman packages
+yay_packages() {
+    for PKG in "${PKGS_PACMAN[@]}"; do
+        echo "INSTALLING: ${PKG}"
+        yay -S "$PKG" --noconfirm --needed
+    done
+
+
+}
+if [ $AUTO == true ]
+then
+    yay_packages
+else
+    read -p "Do you want to install Yay Packages? " -n 1 -r
+    echo    # (optional) move to a new line
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        yay_packages
     fi
 fi
 echo -ne "
