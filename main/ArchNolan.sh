@@ -48,7 +48,6 @@ CWD=$(pwd) # sets the current working directory to a variable
 
 PKGS_PACMAN=(
 'discord'
-'telegram-desktop'
 'networkmanager-openvpn'
 'firefox'
 'vlc'
@@ -56,16 +55,11 @@ PKGS_PACMAN=(
 'tk'
 'netcat'
 'nmap'
-'flameshot'
-'ruby'
-'npx'
-'nodejs'
-'code'
+'flameshot' # screenshot utility
 'gimp'
 'wine-gecko'
 'wine-mono'
 'winetricks'
-'neovim'
 'steam'
 'wget'
 'kitty'
@@ -76,20 +70,26 @@ PKGS_PACMAN=(
 'qemu python python-pip python-wheel' # Mac VM dependencies
 'lutris'
 'locate'
-'nodejs npm'
-'scrcpy'
+'scrcpy' # Control Android over USB
 'sqlitebrowser'
-'gcc' # C compiler
 'base-devel --needed'
 '--needed jre-openjdk'
 'libreoffice-still'
 'hunspell'
 'hunspell-en_us'
-'python2'
 'dolphin-emu'
 'tree'
 'brave-browser'
 'etcher'
+# Programming Languages
+'julia'
+'gcc' # C compiler
+'nodejs npm'
+'ruby'
+'neovim'
+'nodejs'
+'npx'
+'code' # VS Code
 )
 
 PKGS_YAY={
