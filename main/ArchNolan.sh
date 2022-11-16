@@ -90,6 +90,7 @@ PKGS_PACMAN=(
 'nodejs'
 'npx'
 'code' # VS Code
+'go' #GoLang
 )
 
 PKGS_YAY={
