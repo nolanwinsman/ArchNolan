@@ -77,6 +77,7 @@ PKGS_PACMAN=(
 'libreoffice-still'
 'hunspell'
 'hunspell-en_us'
+'shotcut'
 'dolphin-emu'
 'tree'
 'brave-browser'
