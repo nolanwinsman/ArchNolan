@@ -185,26 +185,7 @@ else
         yay_packages
     fi
 fi
-echo -ne "
 
-----------------------------------------------------------------------
-
-                            Snap Pakages
-
-----------------------------------------------------------------------
-
-"# installs all snap packages
-
-# function to install snap packages
-snap_packages() {
-    sudo ln -s /var/lib/snapd/snap /snap # makes a symbolic link
-
-    for PKG in "${PKGS_SNAP[@]}"; do
-        echo "INSTALLING: ${PKG}"
-        sudo snap install "$PKG"
-done
-
-}
 if [ $AUTO == true ]
 then
     snap_packages
